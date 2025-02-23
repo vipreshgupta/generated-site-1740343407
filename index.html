@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Gaming Paradise</title>
+    <style>
+        /* --- Reset & Basic Styles --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* --- Font --- */
+        @font-face {
+            font-family: 'Press Start 2P';
+            src: url('https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivNm4I81.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* --- Container --- */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Header --- */
+        header {
+            text-align: center;
+            padding: 20px 0;
+            position: relative; /* For absolute positioning of theme indicator */
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: blink-cursor 1s steps(5, start) infinite;
+        }
+
+        @keyframes blink-cursor {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        /* --- Theme Selector --- */
+        .theme-selector {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .theme-button {
+            padding: 5px 10px;
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6em;
+        }
+        .theme-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Theme Indicator --- */
+        .theme-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.8em;
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Sections --- */
+        section {
+            margin-bottom: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 800px; /* Limit width for better readability */
+        }
+
+        /* --- Game Menu --- */
+        #game-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the left */
+            width: 100%;
+        }
+
+        .menu-item {
+            font-size: 1.2em;
+            margin: 5px 0;
+            cursor: pointer;
+            padding-left: 20px; /* Indent menu items */
+            position: relative; /* For the blinking cursor */
+            width: fit-content; /* Fit width to content */
+        }
+
+        .menu-item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            animation: blink-cursor 1s steps(2, start) infinite;
+        }
+
+        .menu-item:hover {
+            color: #ff6b6b; /* Highlight on hover */
+        }
+
+        /* --- Game Showcase --- */
+        #game-showcase {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap */
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .game-cabinet {
+            width: 150px;
+            height: 200px;
+            background-color: #333;
+            border: 5px solid #555;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .game-cabinet:hover .game-thumbnail {
+            transform: scale(1.1);
+        }
+
+        /* --- Mini Game --- */
+        #mini-game canvas {
+            border: 4px solid #fff;
+            background-color: #000;
+        }
+
+        /* --- Blog --- */
+        #blog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .blog-post {
+            border: 2px solid #fff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .blog-post h2 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        /* --- Merch Store --- */
+        #merch-store {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .merch-item {
+            border: 2px solid #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .merch-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 2px solid #fff;
+        }
+
+        /* --- Themes --- */
+        .theme-gb {
+            background-color: #9bbb59;
+            color: #0f380f;
+        }
+
+        .theme-gb .theme-button {
+            border-color: #0f380f;
+            color: #0f380f;
+        }
+        .theme-gb .theme-button:hover {
+            background-color: rgba(15, 56, 15, 0.2);
+        }
+
+        .theme-gb .menu-item:hover {
+            color: #306230;
+        }
+
+        .theme-nes {
+            background-color: #808080;
+            color: #000;
+        }
+
+        .theme-nes .theme-button {
+            border-color: #000;
+            color: #000;
+        }
+        .theme-nes .theme-button:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-nes .menu-item:hover {
+            color: #444;
+        }
+
+        .theme-arcade {
+            background-color: #000;
+            color: #ff00cc;
+        }
+
+        .theme-arcade .theme-button {
+            border-color: #ff00cc;
+            color: #ff00cc;
+        }
+        .theme-arcade .theme-button:hover {
+            background-color: rgba(255, 0, 204, 0.2);
+        }
+
+        .theme-arcade .menu-item:hover {
+            color: #ff6b6b;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .menu-item {
+                font-size: 1em;
+            }
+
+            #game-showcase, #blog, #merch-store {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="theme-arcade"> <!-- Default theme -->
+    <div class="container">
+        <header>
+            <h1>Retro Gaming Paradise</h1>
+            <div class="theme-selector">
+                <button class="theme-button" data-theme="gb">Game Boy</button>
+                <button class="theme-button" data-theme="nes">NES</button>
+                <button class="theme-button" data-theme="arcade">Arcade</button>
+            </div>
+            <div class="theme-indicator">Arcade</div>
+        </header>
+
+        <main>
+            <section id="game-menu">
+                <div class="menu-item" data-section="game-showcase">Game Showcase</div>
+                <div class="menu-item" data-section="mini-game">Mini Game</div>
+                <div class="menu-item" data-section="blog">Blog</div>
+                <div class="menu-item" data-section="merch-store">Merch Store</div>
+            </section>
+
+            <section id="game-showcase" style="display: none;">
+                <div class="game-cabinet">
+                    <img src="https://via.placeholder.com/150x200/ff00cc/000000?text=Game+1" alt="Game 1" class="game-thumbnail">
+                </div>
+                <div class="game-cabinet">
+                    <img src="https://via.placeholder.com/150x200/ff00cc/000000?text=Game+2" alt="Game 2" class="game-thumbnail">
+                </div>
+                <!-- More game cabinets -->
+            </section>
+
+            <section id="mini-game" style="display: none;">
+                <canvas id="gameCanvas" width="400" height="300"></canvas>
+            </section>
+
+            <section id="blog" style="display: none;">
+                <div class="blog-post">
+                    <h2>Retro Review: Classic Game</h2>
+                    <p>A look back at one of the greatest games of all time.</p>
+                </div>
+                <div class="blog-post">
+                    <h2>Top 10 Hidden Gems</h2>
+                    <p>Discover some underrated classics you might have missed.</p>
+                </div>
+                <!-- More blog posts -->
+            </section>
+
+            <section id="merch-store" style="display: none;">
+                <div class="merch-item">
+                    <img src="https://via.placeholder.com/150/ff00cc/000000?text=T-Shirt" alt="Retro T-Shirt">
+                    <p>Retro T-Shirt - $20</p>
+                </div>
+                <div class="merch-item">
+                    <img src="https://via.placeholder.com/150/ff00cc/000000?text=Sticker" alt="Retro Sticker">
+                    <p>Retro Sticker - $5</p>
+                </div>
+                <!-- More merch items -->
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Retro Gaming Paradise</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Theme Switching ---
+        document.querySelectorAll('.theme-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const theme = button.dataset.theme;
+                document.body.className = `theme-${theme}`;
+                document.querySelector('.theme-indicator').textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+            });
+        });
+
+        // --- Menu Navigation ---
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.dataset.section;
+                document.querySelectorAll('section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                document.getElementById(sectionId).style.display = sectionId === 'game-showcase' || sectionId === 'blog' || sectionId === 'merch-store' ? 'grid' : 'block';
+            });
+        });
+
+        // --- Mini Game (Simple Example) ---
+        const canvas = document.getElementById('gameCanvas');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          let x = canvas.width / 2;
+          let y = canvas.height - 30;
+          let dx = 2;
+          let dy = -2;
+
+          function draw() {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.beginPath();
+              ctx.arc(x, y, 10, 0, Math.PI*2);
+              ctx.fillStyle = "#fff";
+              ctx.fill();
+              ctx.closePath();
+
+              x += dx;
+              y += dy;
+
+              if(x + dx > canvas.width-10 || x + dx < 10) {
+                  dx = -dx;
+              }
+              if(y + dy > canvas.height-10 || y + dy < 10) {
+                  dy = -dy;
+              }
+          }
+          setInterval(draw, 10);
+        }
+    </script>
+</body>
+</html>
